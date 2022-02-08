@@ -1,0 +1,69 @@
+import pygame
+
+pygame.init()
+pygame.display.set_caption('PINGY PONGY')
+
+WIDTH = 800
+HEIGHT = 800
+coor_x = 100
+coor_y = 400
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+game_over = False
+
+clock = pygame.time.Clock()
+racket1_color = (201, 18, 80)
+racket2_color = (80, 201, 18)
+ball_color = (250, 245, 0)
+background_color = (0, 0, 0)
+racket1_pos_size = [coor_x, coor_y, 20, 70]
+racket2_pos_size = [WIDTH - coor_x, HEIGHT - coor_y, 20, 70]
+racket1 = pygame.draw.rect(screen, racket1_color, racket1_pos_size)
+racket2 = pygame.draw.rect(screen, racket2_color, racket2_pos_size)
+ball_pos_size = [WIDTH/2, HEIGHT/2]
+ball = pygame.draw.circle(screen, ball_color, ball_pos_size, 10)
+ball_dx = 1
+ball_dy = 0
+
+pygame.key.set_repeat(30) #fps ako rychlo sa pohybuju raketky
+#game loop
+while not game_over:
+    for event in pygame.event.get():
+        print(event)
+        if event.type == pygame.QUIT:
+            game_over = True
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                game_over = True
+            elif event.key == pygame.K_w:
+                if racket1_pos_size[1] > 0:
+                    racket1_pos_size[1] -= 10
+            elif event.key == pygame.K_s:
+                if racket1_pos_size[1] + racket1_pos_size[3] < HEIGHT:
+                    racket1_pos_size[1] += 10
+            elif event.key == pygame.K_UP:
+                if racket2_pos_size[1] > 0:
+                    racket2_pos_size[1] -= 10
+            elif event.key == pygame.K_DOWN:
+                if racket2_pos_size[1] + racket2_pos_size[3] < HEIGHT:
+                    racket2_pos_size[1] += 10
+
+
+#ball
+    ball_pos_size[0] = ball_pos_size[0] + ball_dx
+    ball_pos_size[1] = ball_pos_size[1] + ball_dy
+
+    if racket2.colliderect(ball): #ked sa ball dotkne rakety 2, odrazi sa
+        ball_dx = -1
+    if racket1.colliderect(ball):
+        ball_dx = 1
+
+    #RENDER
+    screen.fill(background_color)
+    racket1 = pygame.draw.rect(screen, racket1_color, racket1_pos_size)
+    racket2 = pygame.draw.rect(screen, racket2_color, racket2_pos_size)
+    ball = pygame.draw.circle(screen, ball_color, ball_pos_size, 10)
+    pygame.display.update()
+    clock.tick(200)
+pygame.quit()
