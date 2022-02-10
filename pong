@@ -102,9 +102,9 @@ while not game_over:
         y_racket = racket2_pos_size[1]
         racket_height = racket2_pos_size[3]
         if y_ball - y_racket > racket_height / 2:
-            ball_dy = 1
+            ball_dy = random.uniform(0.5, 1)
         elif y_ball - y_racket < racket_height / 2:
-            ball_dy = -1
+            ball_dy = random.uniform(-1, 0.5)
         else:
             ball_dy = 0
 
@@ -114,9 +114,9 @@ while not game_over:
         y_racket = racket1_pos_size[1]
         racket_height = racket1_pos_size[3]
         if y_ball - y_racket > racket_height / 2:
-            ball_dy = 1
+            ball_dy = random.uniform(0.5, 1)
         elif y_ball - y_racket < racket_height / 2:
-            ball_dy = -1
+            ball_dy = random.uniform(-1, 0.5)
         else:
             ball_dy = 0
 
