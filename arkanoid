@@ -1,0 +1,31 @@
+import pygame
+
+pygame.init()
+
+WIDTH = 800
+HEIGHT = 800
+background_color = 'black'
+racket_color = (255, 255, 255)
+ball_color = (31, 31, 31)
+
+#pridat spodnu raketku a lopticku
+
+racket_pos_size =
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+game_over = False
+
+while not game_over:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_over = True
+
+
+
+    screen.fill(background_color)
+    pygame.display.update()
+
+
+
+pygame.quit()
