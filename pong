@@ -3,6 +3,7 @@ import random
 import time
 
 pygame.init()
+pygame.font.init()
 pygame.display.set_caption('PINGY PONGY')
 
 WIDTH = 800
@@ -10,6 +11,8 @@ HEIGHT = 800
 coor_x = 100
 coor_y = 400
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+myfont = pygame.font.SysFont('Helvetica', 50)
 
 game_over = False
 
@@ -50,6 +53,9 @@ def start():
 ball_dx = 0
 ball_dy = 0
 
+player1_score = 0
+player2_score = 0
+
 start()
 
 # game loop
@@ -88,7 +94,13 @@ while not game_over:
 
     if ball_pos_size[1] > HEIGHT or ball_pos_size[1] < 0:
         ball_dy = -ball_dy
-    if ball_pos_size[0] > WIDTH or ball_pos_size[0] < 0:
+    if ball_pos_size[0] > WIDTH:
+        player1_score += 1
+        print(f'Player 1 scored - {player1_score} : {player2_score}')
+        start()
+    elif ball_pos_size[0] < 0:
+        player2_score += 1
+        print(f'Player 2 scored - {player1_score} : {player2_score}')
         start()
 
     # ball
@@ -120,8 +132,14 @@ while not game_over:
         else:
             ball_dy = 0
 
-    # RENDER
     screen.fill(background_color)
+
+    #score
+    text = myfont.render(f'{player1_score} {player2_score}', True, (221, 211, 211), (31, 31, 31))
+    text_rectangle = text.get_rect(center = (WIDTH/2, 40))
+    screen.blit(text, text_rectangle)
+
+    # RENDER
     racket1 = pygame.draw.rect(screen, racket1_color, racket1_pos_size)
     racket2 = pygame.draw.rect(screen, racket2_color, racket2_pos_size)
     ball = pygame.draw.circle(screen, ball_color, ball_pos_size, 8)
