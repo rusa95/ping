@@ -1,0 +1,30 @@
+import pygame
+import random
+
+DISTANCE = 20
+WIDTH = DISTANCE * 40
+HEIGHT = DISTANCE * 40
+
+def main():
+    #initialization
+    pygame.init()
+
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+    game_goes_on = True
+
+    # x coord, y coord
+    snake = [(20, 20)]
+    snake_head = (random.randrange(DISTANCE, WIDTH, DISTANCE))
+    
+    while game_goes_on:
+        #process input
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_goes_on = False
+
+        pygame.display.update()
+    #quitting
+    pygame.quit()
+
+main()
