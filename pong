@@ -15,7 +15,7 @@ def game():
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    text_font = pygame.font.SysFont('Arial', 20)
+    text_font = pygame.font.SysFont('Oldways', 25)
     myfont = pygame.font.SysFont('Helvetica', 50)
 
     # object colors in rgb
@@ -163,15 +163,18 @@ def game():
         text_rectangle = text.get_rect(center = (WIDTH/2, 40))
         screen.blit(text, text_rectangle)
 
-        # start_text = text_font.render(f'Press "SPACE" to start the game.', True, (0, 0, 0), (255, 255, 255))
-        # text_pos = text.get_rect(midleft = (HEIGHT/3, 700))
-        # screen.blit(start_text, text_pos)
+        pygame.draw.aaline(screen, ball_color, (WIDTH / 2, 0), (WIDTH / 2, HEIGHT))
+
+        if pressed == False:
+            start_text = text_font.render(f'Press "SPACE" to start the game.', True, (221, 211, 211),(31, 31, 31))
+            text_pos = text.get_rect(center = (HEIGHT/2.8, 700))
+            screen.blit(start_text, text_pos)
 
         # RENDER
         racket1 = pygame.draw.rect(screen, racket1_color, racket1_pos_size)
         racket2 = pygame.draw.rect(screen, racket2_color, racket2_pos_size)
         ball = pygame.draw.circle(screen, ball_color, ball_pos_size, 8)
-        pygame.draw.aaline(screen, ball_color, (WIDTH/2, 0), (WIDTH/2, HEIGHT))
+
         pygame.display.update()
         clock.tick(220)
 game()
