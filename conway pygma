@@ -1,16 +1,19 @@
 import pygame
 
-WIDTH = 800
-HEIGHT = 800
+DISTANCE = 20
+WIDTH = DISTANCE * 40
+HEIGHT = DISTANCE * 40
 BACKGROUND = (0, 0, 0)
 
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 def main():
-    pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
     game_goes_on = True
     clock = pygame.time.Clock()
 
     while game_goes_on:
+        drawGrid()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_goes_on = False
@@ -18,7 +21,6 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     game_goes_on = False
-
     screen.fill(BACKGROUND)
 
     pygame.draw.circle(screen, (255, 255, 255), (50, 20), 50)
@@ -26,6 +28,13 @@ def main():
     pygame.display.update()
     clock.tick(220)
 
+def drawGrid():
+    blockSize = 20 
+    for x in range(0, WIDTH, blockSize):
+        for y in range(0, HEIGHT, blockSize):
+            rect = pygame.Rect(x, y, blockSize, blockSize)
+            pygame.draw.rect(screen, (255, 255, 255), rect, 1)
+            
 main()
 
 pygame.quit()
