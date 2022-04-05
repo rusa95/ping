@@ -1,0 +1,31 @@
+import pygame
+
+WIDTH = 800
+HEIGHT = 800
+BACKGROUND = (0, 0, 0)
+
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    game_goes_on = True
+    clock = pygame.time.Clock()
+
+    while game_goes_on:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_goes_on = False
+            keys = pygame.key.get_pressed()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    game_goes_on = False
+
+    screen.fill(BACKGROUND)
+
+    pygame.draw.circle(screen, (255, 255, 255), (50, 20), 50)
+
+    pygame.display.update()
+    clock.tick(220)
+
+main()
+
+pygame.quit()
