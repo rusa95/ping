@@ -1,40 +1,58 @@
 import pygame
+import random
 
-DISTANCE = 20
-WIDTH = DISTANCE * 40
-HEIGHT = DISTANCE * 40
-BACKGROUND = (0, 0, 0)
+COLUMN = 60
+ROW = 40
+SQUARE = 20
+
+WIDTH = SQUARE * COLUMN
+HEIGHT = SQUARE * ROW
+
+DEAD = 0
+ALIVE = 1
+# ---------------------------------------------------------
+# functions
+def first_gen(row = ROW, column = COLUMN, alive_count = 200):
+    generation = []
+    for row in range(row):
+        generation.append([0]* column)
+
+    for i in range(alive_count):
+        row = random.randint(0, row - 1)
+        column = random.randint(0, column -1)
+
+        while generation[row][column] == ALIVE:
+            row = random.randint(0, row)
+            column = random.randint(0, column)
+
+        generation[row][column] = ALIVE
+
+    return generation
+
+
+
+# --------------------------------------------------------
+# Main Program
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-def main():
-    game_goes_on = True
-    clock = pygame.time.Clock()
+game_goes_on = True
+orig_generation = first_gen()
 
-    while game_goes_on:
-        drawGrid()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game_goes_on = False
-            keys = pygame.key.get_pressed()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    game_goes_on = False
-    screen.fill(BACKGROUND)
+while game_goes_on:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_goes_on = False
 
-    pygame.draw.circle(screen, (255, 255, 255), (50, 20), 50)
+    for row in range(ROW):
+        for column in range(COLUMN):
+            if orig_generation[row][column] == ALIVE:
+                pygame.draw.rect(screen, (160, 160, 160), (column * SQUARE, row * SQUARE, SQUARE, SQUARE))
+            else:
+                pygame.draw.rect(screen, (255, 204, 255), (column * SQUARE, row * SQUARE, SQUARE, SQUARE), width =  1)
 
     pygame.display.update()
-    clock.tick(220)
 
-def drawGrid():
-    blockSize = 20 
-    for x in range(0, WIDTH, blockSize):
-        for y in range(0, HEIGHT, blockSize):
-            rect = pygame.Rect(x, y, blockSize, blockSize)
-            pygame.draw.rect(screen, (255, 255, 255), rect, 1)
-            
-main()
 
 pygame.quit()
