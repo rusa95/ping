@@ -1,0 +1,34 @@
+import pygame
+
+WIDTH = 950
+HEIGHT = 800
+
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+game_clock = pygame.time.Clock()
+game_on = True
+
+ball = {'color': (255,127, 0), 'x': 50, 'y': 400, 'radius': 20}
+basket = [(1000, 300), (800, 300), (820, 400), (870, 400), (890, 300)]
+
+throw = {'x': 13, 'y': -19}
+gravity = {'x': 0, 'y': 0.54}
+air_resist = {'x': -0.02, 'y': 0}
+while game_on:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_on = False
+
+    ball['x'] += throw['x']
+    ball['y'] += throw['y']
+
+    throw['x'] += air_resist['x']
+    throw['y'] += gravity['y']
+
+    screen.fill((0,0,0))
+    pygame.draw.circle(screen, ball['color'], (ball['x'], ball['y']), ball['radius'])
+    pygame.draw.lines(screen, (200, 200, 200), False, basket, 2)
+    pygame.display.update()
+    game_clock.tick(30)
+
+pygame.quit()
